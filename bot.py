@@ -2,7 +2,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 BOT_TOKEN = '7535391262:AAG-xbokyJGmR8gHhTSpu7uI1FScmqxqYZ4'
-IMAGE_URL = 'https://i.imgur.com/nXmrUzW.jpeg'
+IMAGE_URL = 'https://i.imgur.com/OEaAePP.jpeg'
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
