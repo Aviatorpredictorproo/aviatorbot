@@ -8,7 +8,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     await update.message.reply_photo(
         photo=IMAGE_URL,
-        caption=f"👋 Hello {user.first_name}!\n\n🎉 WWELCOME TO ETHIO AVIATOR PREDICTOR PRO, CLICK BELOW THE BUTTON."
+        caption=f"👋 Hello {user.first_name}!\n\n🎉 WELCOME TO ETHIO AVIATOR PREDICTOR PRO, CLICK BELOW THE BUTTON."
     )
 
 app = ApplicationBuilder().token(BOT_TOKEN).build()
