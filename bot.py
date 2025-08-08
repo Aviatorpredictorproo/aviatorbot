@@ -4,7 +4,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from flask import Flask
 import threading
 
-BOT_TOKEN = os.getenv('BOT_TOKEN')
+BOT_TOKEN = os.getenv('BOT_TOKEN')  # Token from environment variable
 IMAGE_URL = 'https://i.imgur.com/OEaAePP.jpeg'
 
 app = ApplicationBuilder().token(BOT_TOKEN).build()
