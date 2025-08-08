@@ -5,7 +5,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 import os
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
-print("BOT_TOKEN:", BOT_TOKEN)  # For debug
+print("BOT_TOKEN:", BOT_TOKEN)  # For debugging, check in Render logs
 
 IMAGE_URL = 'https://i.imgur.com/OEaAePP.jpeg'
 
