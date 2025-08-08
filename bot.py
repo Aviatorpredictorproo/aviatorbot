@@ -1,12 +1,10 @@
-from flask import Flask
-import threading
+import os
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-import os
+from flask import Flask
+import threading
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
-print("BOT_TOKEN:", BOT_TOKEN)  # For debugging, check in Render logs
-
 IMAGE_URL = 'https://i.imgur.com/OEaAePP.jpeg'
 
 app = ApplicationBuilder().token(BOT_TOKEN).build()
@@ -15,7 +13,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     await update.message.reply_photo(
         photo=IMAGE_URL,
-        caption=f"👋🏻 Hello {user.first_name}!\n\n🎉 WELCOME TO ETHIO AVIATOR PREDICTOR PRO, CLICK BELOW THE BUTTON."
+        caption=f"👋🏻 Hello {user.first_name}!\n\n🎉 WELCOME TO ETHIO AVIATOR PREDICTOR PRO."
     )
 
 app.add_handler(CommandHandler("start", start))
