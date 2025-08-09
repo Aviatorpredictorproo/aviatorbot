@@ -1,14 +1,16 @@
 import os
+from flask import Flask, request
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
-from flask import Flask
-import threading
 
-BOT_TOKEN = os.getenv('BOT_TOKEN')  # Token from environment variable
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+WEBHOOK_URL = f"https://aviatorbot-eyft.onrender.com/webhook"  # Your Render link
 IMAGE_URL = 'https://i.imgur.com/OEaAePP.jpeg'
 
-app = ApplicationBuilder().token(BOT_TOKEN).build()
+flask_app = Flask(__name__)
+tg_app = ApplicationBuilder().token(BOT_TOKEN).build()
 
+# /start command
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     await update.message.reply_photo(
@@ -16,17 +18,25 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         caption=f"👋🏻 Hello {user.first_name}!\n\n🎉 WELCOME TO ETHIO AVIATOR PREDICTOR PRO."
     )
 
-app.add_handler(CommandHandler("start", start))
+tg_app.add_handler(CommandHandler("start", start))
 
-def run_bot():
-    app.run_polling()
+# Webhook endpoint for Telegram
+@flask_app.route("/webhook", methods=["POST"])
+def webhook():
+    update = Update.de_json(request.get_json(force=True), tg_app.bot)
+    tg_app.update_queue.put_nowait(update)
+    return "ok"
 
-web_app = Flask(__name__)
-
-@web_app.route('/')
+# Home page
+@flask_app.route("/")
 def home():
-    return "Bot is running!"
+    return "Bot is running with webhook!"
 
 if __name__ == "__main__":
-    threading.Thread(target=run_bot).start()
-    web_app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    import asyncio
+
+    async def set_webhook():
+        await tg_app.bot.set_webhook(WEBHOOK_URL)
+
+    asyncio.run(set_webhook())
+    flask_app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
